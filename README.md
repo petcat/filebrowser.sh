@@ -37,7 +37,7 @@ LOG_PATH=${LOG_PATH:-/var/log/filebrowser.log}
 若需要修改端口及监听地址，可使用 -fix 修改，127.0.0.1 需要配合域名和nginx反代才能访问
 
 ## 清理
-若不想使用，可删除脚本，并删除 /opt/filebrowser 即可
+若不想使用，可删除脚本，并删除 /opt/filebrowser 即可     
 `systemctl stop filebrowser && rm -rf /etc/systemd/system/filebrowser.service && rm -rf /opt/filebrowser/filebrowser /opt/filebrowser/filebrowser.db`
 
 ### 欢迎支持和使用
