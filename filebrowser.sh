@@ -78,7 +78,7 @@ EOF
 Filebrowser 已安装并启动成功
 ------------------------------
 监听: $ADDRESS:$LISTEN_PORT
-语言: $LANGUAGE
+语言: $FB_LOCALE
 用户名: $USERNAME
 密码: $PASSWORD
 日志路径: $LOG_PATH
