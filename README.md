@@ -19,7 +19,7 @@ wget https://raw.githubusercontent.com/petcat/filebrowser/refs/heads/main/filebr
 ```
 ADDRESS=${ADDRESS:-0.0.0.0}    # 可选：127.0.0.1 / 0.0.0.0 / [::]
 LISTEN_PORT=${LISTEN_PORT:-8090}
-LANGUAGE=${LANGUAGE:-zh-cn}
+FB_LOCALE=${FB_LOCALE:-zh-cn}
 LOG_PATH=${LOG_PATH:-/var/log/filebrowser.log}
 ```
 
