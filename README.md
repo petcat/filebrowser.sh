@@ -11,7 +11,7 @@ Filebrowser 是一个非常好用的文件浏览器，本一键脚本在官方�
 wget https://raw.githubusercontent.com/petcat/filebrowser/refs/heads/main/filebrowser.sh && chmod +x filebrowser.sh
 ./filebrowser.sh
 ```
-1、脚本会自动配置以下项目：监听本机 0.0.0.0 和 8090 端口，并设置程序语言为中文，并将日志写到 /var/log/filebrowser.log；   
+1、脚本会自动配置以下项目：监听本机 0.0.0.0 和 6070 端口，并设置程序语言为中文，并将日志写到 /var/log/filebrowser.log；   
 2、脚本会询问你设置管理员用户名和密码，如直接回车，则使用默认 admin 用户名和随机生成16位密码。
 官方默认 127.0.0.1 需反代才能使用，设置 0.0.0.0 或 [::] 可外网通过IP+端口直接访问，无须域名和反代，但会暴露，推荐不使用 admin 用户名，密码一定要足够复杂，[::] 为 IPv6 + IPv4 均可访问；  
 以上设置均可自行修改脚本实现，先修改再执行。
@@ -28,9 +28,16 @@ LOG_PATH=${LOG_PATH:-/var/log/filebrowser.log}
 `./filebrowser.sh -upgrade` 当有新版本可升级时，可升级更新，脚本会自动判断版本是否有更新，有则升级。   
 `./filebrowser.sh -pw` 当忘记默认生成的随机密码，可修改默认第一个用户即 admin 密码，如你不输入密码，脚本会自动生成新的16位密码并显示给你。   
 `./filebrowser.sh -ls` 可列出当前所有用户；     
-`./filebrowser.sh -add xxxx zzzzz` 可新增普通用户，其中 xxxx 为用户名 zzzzz 为密码。注意，密码需要足够复杂，否则会失败报错。  
+`./filebrowser.sh -add xxxx zzzzz` 可新增普通用户，其中 xxxx 为用户名 zzzzz 为密码。注意，密码需要足够复杂，否则会失败报错。
+```
+./filebrowser.sh -fix 0 8888  # 0表示0.0.0.0 ， 端口8888
+./filebrowser.sh -fix 1 8899  # 1表示127.0.0.1 ，端口8899
+./filebrowser.sh -fix 3 8800  # 3表示 [::] ，端口8800
+``` 
+若需要修改端口及监听地址，可使用 -fix 修改，127.0.0.1 需要配合域名和nginx反代才能访问
 
 ## 清理
+若不想使用，可删除脚本，并删除 /opt/filebrowser 即可
 `systemctl stop filebrowser && rm -rf /etc/systemd/system/filebrowser.service && rm -rf /opt/filebrowser/filebrowser /opt/filebrowser/filebrowser.db`
 
-欢迎支持和使用
+### 欢迎支持和使用
