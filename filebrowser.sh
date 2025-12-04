@@ -1,4 +1,5 @@
 #!/bin/bash
+export LC_ALL=C
 set -euo pipefail    
 
 ######################################################
