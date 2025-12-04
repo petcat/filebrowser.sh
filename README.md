@@ -10,9 +10,17 @@ Filebrowser 是一个非常好用的文件浏览器，本一键脚本在官方�
 wget https://raw.githubusercontent.com/petcat/filebrowser/refs/heads/main/filebrowser.sh && chmod +x filebrowser.sh
 ./filebrowser.sh
 ```
+1、脚本会自动配置以下项目：监听本机 0.0.0.0 和 8090 端口，并设置程序语言为中文，并将日志写到 /var/log/filebrowser.log；   
+2、脚本会询问你设置管理员用户名和密码，如直接回车，则使用默认 admin 用户名和随机生成16位密码。
+官方默认 127.0.0.1 需反代才能使用，设置 0.0.0.0 或 [::] 可外网通过IP+端口直接访问，无须域名和反代，但会暴露，推荐不使用 admin 用户名，密码一定要足够复杂，[::] 为 IPv6 + IPv4 均可访问；  
+以上设置均可自行修改脚本实现，先修改再执行。
 
-脚本会自动配置以下项目：监听本机 0.0.0.0 和 8090 端口，并设置程序语言为中文，并将日志写到 /var/log/filebrowser.log；   
-脚本会询问你设置管理员用户名和密码，如直接回车，则使用默认 admin 用户名和随机生成16位密码。
+```
+ADDRESS=${ADDRESS:-0.0.0.0}    # 可选：127.0.0.1 / 0.0.0.0 / [::]
+LISTEN_PORT=${LISTEN_PORT:-8090}
+LANGUAGE=${LANGUAGE:-zh-cn}
+LOG_PATH=${LOG_PATH:-/var/log/filebrowser.log}
+```
 
 # 升级及其他功能
 
@@ -20,3 +28,5 @@ wget https://raw.githubusercontent.com/petcat/filebrowser/refs/heads/main/filebr
 `./filebrowser.sh -pw` 当忘记默认生成的随机密码，可修改默认第一个用户即 admin 密码，如你不输入密码，脚本会自动生成新的16位密码并显示给你。   
 `./filebrowser.sh -ls` 可列出当前所有用户；     
 `./filebrowser.sh -add xxxx zzzzz` 可新增普通用户，其中 xxxx 为用户名 zzzzz 为密码。注意，密码需要足够复杂，否则会失败报错。   
+
+欢迎支持和使用
