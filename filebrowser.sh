@@ -129,14 +129,29 @@ if [[ "${1:-}" == "-ls" ]]; then
   exit 0
 fi
 
+# 升级更新 -upgrade 
 if [[ "${1:-}" == "-upgrade" ]]; then
   echo "检查当前版本..."
-  CURRENT_VER=$("$BIN_PATH/filebrowser" version | awk '{print $NF}')
+  RAW_VER=$("$BIN_PATH/filebrowser" version)
+  # 先取第三字段，再去掉斜杠及其后缀；兜底用正则匹配 vX.Y.Z
+  CURRENT_VER=$(echo "$RAW_VER" | awk '{print $3}' | cut -d'/' -f1)
+  if [[ -z "$CURRENT_VER" ]]; then
+    CURRENT_VER=$(echo "$RAW_VER" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+')
+  fi
   echo "当前版本: $CURRENT_VER"
 
   echo "获取最新版本..."
-  LATEST_VER=$(curl -s https://api.github.com/repos/filebrowser/filebrowser/releases/latest | grep tag_name | cut -d '"' -f4)
+  LATEST_VER=$(curl -s https://api.github.com/repos/filebrowser/filebrowser/releases/latest | grep -m1 '"tag_name"' | cut -d '"' -f4)
   echo "最新版本: $LATEST_VER"
+
+  if [[ -z "$CURRENT_VER" || -z "$LATEST_VER" ]]; then
+    echo "版本解析失败，跳过检查，执行保守升级..."
+    curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
+    mv "$(which filebrowser)" "$BIN_PATH/filebrowser"
+    echo "升级完成，新版本:"
+    "$BIN_PATH/filebrowser" version
+    exit 0
+  fi
 
   if [[ "$CURRENT_VER" == "$LATEST_VER" ]]; then
     echo "=============================="
