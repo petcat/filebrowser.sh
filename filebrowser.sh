@@ -99,7 +99,7 @@ if [[ "${1:-}" == "-pw" ]]; then
   "$BIN_PATH/filebrowser" -d "$DB_FILE" users update 1 -p "$NEW_PASS"
   systemctl start filebrowser.service
   echo "=============================="
-  echo "用户 ID=1 密码已更新"
+  echo "ID=1 管理员用户密码已更新"
   echo "新密码: $NEW_PASS"
   echo "=============================="
   exit 0
@@ -112,7 +112,9 @@ if [[ "${1:-}" == "-add" ]]; then
   fi
   NEW_USER="$2"
   NEW_PASS="$3"
+  systemctl stop filebrowser.service
   "$BIN_PATH/filebrowser" -d "$DB_FILE" users add "$NEW_USER" "$NEW_PASS"
+  systemctl start filebrowser.service
   echo "=============================="
   echo "已添加普通用户"
   echo "用户名: $NEW_USER"
@@ -122,10 +124,12 @@ if [[ "${1:-}" == "-add" ]]; then
 fi
 
 if [[ "${1:-}" == "-ls" ]]; then
+  systemctl stop filebrowser.service
   echo "=============================="
   echo "当前用户列表:"
   "$BIN_PATH/filebrowser" -d "$DB_FILE" users ls
   echo "=============================="
+  systemctl start filebrowser.service
   exit 0
 fi
 
