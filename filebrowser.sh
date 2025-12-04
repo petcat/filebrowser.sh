@@ -59,7 +59,7 @@ EOF
   "$BIN_PATH/filebrowser" -d "$DB_FILE" config init \
     --address "$ADDRESS" \
     --port "$LISTEN_PORT" \
-    --locale "$LANGUAGE" \
+    --locale "${LANGUAGE,,}" \
     --log "$LOG_PATH"
 
   # 交互式输入用户名和密码
